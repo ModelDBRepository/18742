@@ -1,0 +1,31 @@
+// this is a modified session file fig7A_VperD.hoc
+// that creates a range variable plot graph which
+// getline is used to take lines from
+
+objectvar save_window_, rvp_, VvsDgraph
+objectvar scene_vector_[9]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+double scene_counter[1]
+
+{
+	save_window_ = new Graph(0)
+	save_window_.size(-400,600,0,1)
+	scene_vector_[8] = save_window_
+	{save_window_.view(-100, -80, 2100, 120, 400, 322, 300.48, 200.32)}
+	flush_list.append(save_window_)
+	save_window_.save_name("flush_list.")
+	objectvar rvp_
+	rvp_ = new RangeVarPlot("v")
+	axon rvp_.begin(0)
+	axon rvp_.end(1)
+	rvp_.origin(0)
+	save_window_.addobject(rvp_, 1, 1, 0.8, 0.9)
+
+	VvsDgraph = save_window_	// for use with getline later
+					// to take the Voltage plots
+					// for graphing snapshots...
+}
+
+objectvar scene_vector_[1]
+{doNotify()}

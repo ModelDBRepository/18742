@@ -1,0 +1,30 @@
+load_file("nrngui.hoc")
+strdef tstr
+
+xpanel("Figures for Tsutsui and Oka 2002")
+xradiobutton("6A", "restart(\"fig6A\")")
+xradiobutton("6B", "restart(\"fig6B\")")
+xradiobutton("7A", "restart(\"fig7A\")")
+xpanel(5,100)
+
+pwmcnt = PWManager[0].count // the initial gui should not be dismissed
+
+proc restart() {local i
+	objref graphItem, save_window_
+	for i=0, n_graph_lists-1 {
+		graphList[i].remove_all()
+	}
+	flush_list.remove_all()
+	fast_flush_list.remove_all()
+	doNotify()
+	for (i= PWManager[0].count-1; i >= pwmcnt; i -= 1) {
+		PWManager[0].close(i)
+		doNotify()
+	}
+	forall {delete_section()}
+	print "starting with"
+	topology()
+	stoprun = 0
+	sprint(tstr, "%s.hoc", $s1)
+	load_file(1, tstr)
+}
